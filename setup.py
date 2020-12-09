@@ -52,7 +52,6 @@ setup(
           'Intended Audience :: Science/Research',
           'License :: OSI Approved :: BSD License',
           'Operating System :: POSIX :: Linux',
-          'Programming Language :: Python :: 3.6',
           'Topic :: Scientific/Engineering :: Information Analysis',
           'Topic :: Scientific/Engineering :: Physics',
     ]
