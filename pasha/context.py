@@ -36,7 +36,7 @@ class MapContext:
         """Initialize this map context.
 
         In order to use the default allocation methods in this type,
-        in particular reduce_array(), the number of workers in this
+        in particular array_per_worker(), the number of workers in this
         context need to be passed to its initializer or stored in a
         `num_workers` property.
 
