@@ -8,8 +8,10 @@
 
 __version__ = '1.0.0'
 
+from functools import wraps
 
-from .context import SerialContext, ThreadContext, ProcessContext  # noqa
+from .context import (
+    MapContext, SerialContext, ThreadContext, ProcessContext)  # noqa
 from .functor import (  # noqa
     SequenceFunctor, NdarrayFunctor, DataArrayFunctor, ExtraDataFunctor)
 
@@ -65,6 +67,7 @@ def set_default_context(ctx_or_method, *args, **kwargs):
     _default_context = ctx
 
 
+@wraps(MapContext.array)
 def array(*args, **kwargs):
     """Allocate an array shared with all workers.
 
@@ -75,6 +78,7 @@ def array(*args, **kwargs):
     return _default_context.array(*args, **kwargs)
 
 
+@wraps(MapContext.array_like)
 def array_like(*args, **kwargs):
     """Allocate an array with the same shape and dtype as another.
 
@@ -85,6 +89,7 @@ def array_like(*args, **kwargs):
     return _default_context.array_like(*args, **kwargs)
 
 
+@wraps(MapContext.array_per_worker)
 def array_per_worker(*args, **kwargs):
     """Allocate a shared array for each worker.
 
@@ -95,6 +100,7 @@ def array_per_worker(*args, **kwargs):
     return _default_context.array_per_worker(*args, **kwargs)
 
 
+@wraps(MapContext.map)
 def map(*args, **kwargs):
     """Apply kernel to each element in the target.
 
