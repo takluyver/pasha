@@ -74,43 +74,19 @@ def set_default_context(ctx_or_method, *args, **kwargs):
 
 @wraps(MapContext.array)
 def array(*args, **kwargs):
-    """Allocate an array shared with all workers.
-
-    See MapContext.array(). This module-level function forwards the call
-    to the default context.
-    """
-
     return get_default_context().array(*args, **kwargs)
 
 
 @wraps(MapContext.array_like)
 def array_like(*args, **kwargs):
-    """Allocate an array with the same shape and dtype as another.
-
-    See MapContext.array_like(). This module-level function forwards the
-    call to the default context.
-    """
-
     return get_default_context().array_like(*args, **kwargs)
 
 
 @wraps(MapContext.array_per_worker)
 def array_per_worker(*args, **kwargs):
-    """Allocate a shared array for each worker.
-
-    See MapContext.array_per_worker(). This module-level function
-    forwards the call to the default context.
-    """
-
     return get_default_context().array_per_worker(*args, **kwargs)
 
 
 @wraps(MapContext.map)
 def map(*args, **kwargs):
-    """Apply kernel to each element in the target.
-
-    See MapContext.map(). This module-level function forwards the call
-    to the default context.
-    """
-
     return get_default_context().map(*args, **kwargs)
