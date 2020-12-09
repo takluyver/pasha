@@ -89,7 +89,7 @@ class Functor:
         if isinstance(value, cls):
             return value
 
-        if getattr(value, '_pasha_functor_'):
+        if hasattr(value, '_pasha_functor_'):
             return value._pasha_functor_()
 
         functor = None
