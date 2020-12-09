@@ -13,11 +13,9 @@ import re
 from setuptools import setup, find_packages
 
 
-with open(Path(__file__).parent / 'README.md', 'r') as f:
-    long_description = f.read()
+parent_path = Path(__file__).parent
 
-
-with open(Path(__file__).parent / 'pasha' / '__init__.py') as f:
+with (parent_path / 'pasha' / '__init__.py').open('r') as f:
     pattern = re.compile(r'^__version__ = \'(\d+\.\d+\.\d[a-z]*\d*)\'', re.M)
 
     for line in f:
@@ -35,7 +33,7 @@ setup(
     version=version,
     description='Tools to parallelize operations on large data sets '
                 'using shared memory with zero copies.',
-    long_description=long_description,
+    long_description=(parent_path / 'README.md').read_text(),
     long_description_content_type='text/markdown',
     author='Philipp Schmidt',
     author_email='philipp.schmidt@xfel.eu',
