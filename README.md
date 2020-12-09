@@ -35,11 +35,11 @@ psh.set_default_context('threads', num_workers=4)
 ```
 There are three different context types builtin: `serial`, `threads` and `processes`.
 
-The input array passed to map() is called a functor and automatically wrapped in a suitable `Functor` object, here `SequenceFunctor`. This works for a number of common array and collection types, but you may also implement your own `Functor` object to wrap anything else. For example, there is built-in support for `DataCollection` objects from the EXtra-data toolkit accessing run files from the European XFEL facilty:
+The input array passed to map() is called a functor and automatically wrapped in a suitable `Functor` object, here `SequenceFunctor`. This works for a number of common array and collection types, but you may also implement your own `Functor` object to wrap anything else. For example, there is built-in support for `DataCollection` and `KeyData` objects from the EXtra-data toolkit accessing run files from the European XFEL facilty:
 ```python
 def analysis_kernel(worker_id, index, train_id, data):
     # Do something with the data and save it to shared memory.
 
 run = extra_data.open_run(proposal=700000, run=1)
-psh.map(analysis_kernel, run)
+psh.map(analysis_kernel, run[source, key])
 ```
