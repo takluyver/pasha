@@ -16,13 +16,13 @@ from .functor import (  # noqa
     SequenceFunctor, NdarrayFunctor, DataArrayFunctor, ExtraDataFunctor)
 
 
-_default_context = ProcessContext()
+_default_context = None
 
 
 def get_default_context():
     """Get default map context.
 
-    On startup, a LocalContext is used as the default context.
+    By default, this returns a ProcessContext.
 
     Args:
         None
@@ -30,6 +30,11 @@ def get_default_context():
     Returns:
         (MapContext) Default map context.
     """
+
+    global _default_context
+
+    if _default_context is None:
+        _default_context = ProcessContext()
 
     return _default_context
 
@@ -75,7 +80,7 @@ def array(*args, **kwargs):
     to the default context.
     """
 
-    return _default_context.array(*args, **kwargs)
+    return get_default_context().array(*args, **kwargs)
 
 
 @wraps(MapContext.array_like)
@@ -86,7 +91,7 @@ def array_like(*args, **kwargs):
     call to the default context.
     """
 
-    return _default_context.array_like(*args, **kwargs)
+    return get_default_context().array_like(*args, **kwargs)
 
 
 @wraps(MapContext.array_per_worker)
@@ -97,7 +102,7 @@ def array_per_worker(*args, **kwargs):
     forwards the call to the default context.
     """
 
-    return _default_context.array_per_worker(*args, **kwargs)
+    return get_default_context().array_per_worker(*args, **kwargs)
 
 
 @wraps(MapContext.map)
@@ -108,4 +113,4 @@ def map(*args, **kwargs):
     to the default context.
     """
 
-    return _default_context.map(*args, **kwargs)
+    return get_default_context().map(*args, **kwargs)
