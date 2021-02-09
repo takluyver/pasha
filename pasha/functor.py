@@ -41,18 +41,18 @@ def gen_split_slices(total_len, part_len=None, n_parts=None):
 class Functor:
     """Mappable object.
 
-    In functional programming, a functor is basically something that can
-    be mapped over. This interface specifically provides the machinery
-    to distribute a share of the value to each worker. The simplest
-    functor is SequenceFunctor, which assigns a set of indices to worker
-    and then iterates over the assigned indices in its body.
+    In functional programming, a functor is something that can be mapped
+    over. This interface specifically provides the machinery to
+    distribute a share of the value to each worker. The simplest functor
+    is SequenceFunctor, which assigns a slice to each worker and then
+    iterates over the indices of that slice in its body.
 
     If a custom type extends this class and implements the wrap
     classmethod, then it can take advantage of automatic wrapping of
     values passed to a map call.
 
-    Alternatively, a type implement an '_pasha_functor_ method to
-    construct a sletabjn functor. This will always take precedence over
+    Alternatively, a type may implement a '_pasha_functor_ method to
+    return a suitable functor. This will always take precedence over
     the automatic detection.
     """
 
@@ -149,18 +149,19 @@ class Functor:
 class SequenceFunctor(Functor):
     """Functor wrapping a generic sequence.
 
-    This functor can wrap any indexable collection, e.g. list, tuples,
-    or any other type implementing __getitem__. It automatically wraps
-    any value implementing the collections.abc.Sequence type, but will
-    work with any array_like object. The kernel is passed the current
-    index and sequence value at that index.
+    This functor can wrap any type implementing the
+    collections.abc.Sequence type, i.e. is indexable by integers and
+    slices and has a length. Instances of this abstract type are
+    automatically wrapped, but the functor should work with any
+    ArrayLike object. The kernel is passed the current index and
+    sequence value at that index.
     """
 
     def __init__(self, sequence):
         """Initialize a sequence functor.
 
         Args:
-            sequence (Sequence, array_like): Sequence to process.
+            sequence (Sequence, ArrayLike): Sequence to process.
         """
 
         self.sequence = sequence
@@ -179,10 +180,10 @@ class SequenceFunctor(Functor):
 
 
 class NdarrayFunctor(SequenceFunctor):
-    """Functor wrapping an numpy.ndarray.
+    """Functor wrapping a numpy.ndarray.
 
     This functor extends SequenceFunctor to allow iterating over
-    specific axes. While it should work for any array_like object,
+    specific axes. While it should work for any ArrayLike object,
     specifying an explicit axis may cause conversion to an ndarray.
     """
 

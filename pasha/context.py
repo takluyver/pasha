@@ -51,7 +51,7 @@ class MapContext:
 
         The implementation may decide how to back this memory, but it
         is required that all workers of this context may read AND write
-        to this memory. The default implementation allocates directly
+        to this memory. The base implementation allocates directly
         on the heap.
 
         Args:
@@ -68,7 +68,7 @@ class MapContext:
         """Allocate an array with the same shape and dtype as another.
 
         Args:
-            other (array_like): Other array.
+            other (ArrayLike): Other array.
 
         Returns:
             (numpy.ndarray) Created array object.
